@@ -1,12 +1,14 @@
 <template>
     <div class="range-wrapper">
         <div ref="rangeLine" class="range" @mousedown="mouseDown" @mouseup="mouseUp" @mousemove="move">
-            <div ref="rangePoint" :style="{ left: distance + 'px' }" class="range__point"></div>
+            <div ref="rangePoint" :style="{ left: range + '%' }" class="range__point"></div>
         </div>
     </div>
 </template>
 
 <script>
+import _ from 'lodash';
+
   export default {
     name: "RangeInput",
     props: {
@@ -29,44 +31,52 @@
         range: this.value,
         point: this.$refs.rangePoint,
         isMouseDown: false,
-        distance: 0,
-        coordinateStartComponent: null
+        //distance: 0,
+        coordinateStartComponent: null,
+        elWidth: null,
       }
     },
     methods: {
       onInput (e) {
         this.$emit('input', e.target.value)
       },
-      move(e) {
+      move: _.throttle(function(e) {
         if (this.isMouseDown === true) {
-          console.log('move')
-          this.setPointPosition(e.clientX)//pageX) //clientX)
+          console.log('move');
+          this.setPointPosition(e.clientX);//pageX) //clientX)
         }
-      },
-      mouseDown() {
+      }, 100),
+
+      mouseDown(e) {
         this.isMouseDown = true;
+        this.setPointPosition(e.clientX);
       },
       mouseUp() {
         this.isMouseDown = false;
       },
       setPointPosition(newX) {
-        console.log('Значение', newX)
         const curentPosition = newX - this.coordinateStartComponent;
-        this.distance = curentPosition;
+        console.log('Значение', curentPosition);
+        //this.distance = curentPosition;
+        this.range = Math.round(curentPosition / this.elWidth * 100);
+
+        //this.$emit('input', this.range)
+        console.log('Проценты', this.range);
       }
     },
     watch: {
-      /*range: function () {
-        this.$emit('input', this.range)
+      range: function () {
+        this.$emit('input', this.range);
       },
       value: function () {
-        this.range = this.value
-      }*/
+        this.range = this.value;
+      }
     },
     mounted() {
-      this.coordinateStartComponent = this.$refs.rangeLine.getBoundingClientRect().left
-      console.log('Проверка')
-      console.log(this.coordinateStartComponent)
+      this.coordinateStartComponent = this.$refs.rangeLine.getBoundingClientRect().left;
+      this.elWidth = this.$refs.rangeLine.getBoundingClientRect().width;
+      console.log(this.coordinateStartComponent);
+      console.log('elWidth', this.elWidth);
     }
   }
 </script>
@@ -89,6 +99,8 @@
         background-color: #ea9b9b;
         border-radius: 50%;
 
-        /*pointer-events: none;*/
+        transform: translateX(-50%);
+
+        pointer-events: none;
     }
 </style>

@@ -14,7 +14,7 @@ export default {
   name: 'Home',
   data() {
     return {
-      range: 50,
+      range: 20,
     }
   },
   components: {
