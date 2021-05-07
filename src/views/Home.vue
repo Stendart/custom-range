@@ -26,6 +26,6 @@ export default {
 <style scoped>
   .test {
     max-width: 70%;
-    margin-left: 100px;
+    margin: 0 auto;
   }
 </style>

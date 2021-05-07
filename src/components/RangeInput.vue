@@ -1,19 +1,25 @@
 <template>
     <div class="range-wrapper">
-        <div ref="rangeLine" class="range" @mousedown="mouseDown" @mouseup="mouseUp" @mousemove="move">
+        <div ref="rangeLine" class="range"
+             @mousedown="mouseDown"
+             @mouseup="mouseUp"
+             @mousemove="move"
+             @touchmove="move"
+             @touchstart="mouseDown"
+             @touchend="mouseUp">
             <div ref="rangePoint" :style="{ left: range + '%' }" class="range__point"></div>
         </div>
     </div>
 </template>
 
 <script>
-import _ from 'lodash';
+import {throttle} from 'lodash';
 
   export default {
     name: "RangeInput",
     props: {
       value: 0,
-      min: {
+      /*min: {
         type: Number,
         default: 0
       },
@@ -24,7 +30,7 @@ import _ from 'lodash';
       step: {
         type: Number,
         default: 1
-      }
+      }*/
     },
     data() {
       return {
@@ -40,16 +46,33 @@ import _ from 'lodash';
       onInput (e) {
         this.$emit('input', e.target.value)
       },
-      move: _.throttle(function(e) {
+      move: throttle(function(e) {
         if (this.isMouseDown === true) {
           console.log('move');
-          this.setPointPosition(e.clientX);//pageX) //clientX)
+          let biasX;
+          if (e.targetTouches) { // Если устройство сенсорное
+            biasX = e.targetTouches[0].pageX;
+          } else if (e.clientX) { // Если устройство не сенсорное
+            biasX = e.clientX;
+          } else {
+            throw new Error('Unknown device type')
+          }
+          this.setPointPosition(biasX);//pageX) //clientX)
         }
       }, 100),
-
       mouseDown(e) {
+        console.log('DOWN', e)
+        console.log('DOWN', e.targetTouches)
+        let biasX;
+        if (e.targetTouches) { // Если устройство сенсорное
+          biasX = e.targetTouches[0].pageX;
+        } else if (e.clientX) { // Если устройство не сенсорное
+          biasX = e.clientX;
+        } else {
+          throw new Error('Unknown device type')
+        }
+        this.setPointPosition(biasX);
         this.isMouseDown = true;
-        this.setPointPosition(e.clientX);
       },
       mouseUp() {
         this.isMouseDown = false;
@@ -58,7 +81,10 @@ import _ from 'lodash';
         const curentPosition = newX - this.coordinateStartComponent;
         console.log('Значение', curentPosition);
         //this.distance = curentPosition;
-        this.range = Math.round(curentPosition / this.elWidth * 100);
+        const percent = Math.round(curentPosition / this.elWidth * 100);
+        if(percent >= 0 && percent <= 100) {
+          this.range = percent;
+        }
 
         //this.$emit('input', this.range)
         console.log('Проценты', this.range);
@@ -101,6 +127,6 @@ import _ from 'lodash';
 
         transform: translateX(-50%);
 
-        pointer-events: none;
+        /*pointer-events: none;*/
     }
 </style>
