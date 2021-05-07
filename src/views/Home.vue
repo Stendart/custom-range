@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <RangeInput class="test" v-model="range" :step="10"></RangeInput>
     <h2>{{range}}</h2>
+    <RangeInput class="test" v-model="range" :step="10"></RangeInput>
   </div>
 </template>
 

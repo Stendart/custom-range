@@ -7,45 +7,33 @@
              @touchmove="move"
              @touchstart="mouseDown"
              @touchend="mouseUp">
-            <div ref="rangePoint" :style="{ left: range + '%' }" class="range__point"></div>
+            <div :style="{ left: range + '%' }" class="range__point"></div>
         </div>
+        <RangeBtns :range-vals="[25,50,75,100]" @changeVal="changeVal"></RangeBtns>
     </div>
 </template>
 
 <script>
 import {throttle} from 'lodash';
+import RangeBtns from './RangeBtns';
 
   export default {
     name: "RangeInput",
     props: {
-      value: 0,
-      /*min: {
+      value: {
         type: Number,
-        default: 0
+        default: 50
       },
-      max: {
-        type: Number,
-        default: 100
-      },
-      step: {
-        type: Number,
-        default: 1
-      }*/
     },
     data() {
       return {
         range: this.value,
-        point: this.$refs.rangePoint,
         isMouseDown: false,
-        //distance: 0,
         coordinateStartComponent: null,
         elWidth: null,
       }
     },
     methods: {
-      onInput (e) {
-        this.$emit('input', e.target.value)
-      },
       move: throttle(function(e) {
         if (this.isMouseDown === true) {
           console.log('move');
@@ -80,18 +68,20 @@ import {throttle} from 'lodash';
       setPointPosition(newX) {
         const curentPosition = newX - this.coordinateStartComponent;
         console.log('Значение', curentPosition);
-        //this.distance = curentPosition;
-        const percent = Math.round(curentPosition / this.elWidth * 100);
-        if(percent >= 0 && percent <= 100) {
-          this.range = percent;
-        }
-
-        //this.$emit('input', this.range)
+          this.range = Math.round(curentPosition / this.elWidth * 100);
         console.log('Проценты', this.range);
+      },
+      changeVal(val) {
+        this.range = val;
       }
     },
     watch: {
-      range: function () {
+      range: function (newVal) {
+        if(newVal > 100) {
+          this.range = 100;
+        } else if (newVal < 0) {
+          this.range = 0;
+        }
         this.$emit('input', this.range);
       },
       value: function () {
@@ -101,8 +91,9 @@ import {throttle} from 'lodash';
     mounted() {
       this.coordinateStartComponent = this.$refs.rangeLine.getBoundingClientRect().left;
       this.elWidth = this.$refs.rangeLine.getBoundingClientRect().width;
-      console.log(this.coordinateStartComponent);
-      console.log('elWidth', this.elWidth);
+    },
+    components: {
+      RangeBtns
     }
   }
 </script>
@@ -113,7 +104,7 @@ import {throttle} from 'lodash';
 
         width: 100%;
         height: 40px;
-        background-color: #2c3e50;
+        background-color: #778c9e;
         border-radius: 30px;
     }
 
@@ -122,7 +113,7 @@ import {throttle} from 'lodash';
 
         width: 40px;
         height: 40px;
-        background-color: #ea9b9b;
+        background-color: #c4c4c4;
         border-radius: 50%;
 
         transform: translateX(-50%);
