@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h2>{{range}}</h2>
+    <h2>{{range}} %</h2>
     <RangeInput class="test" v-model="range"></RangeInput>
   </div>
 </template>

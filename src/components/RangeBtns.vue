@@ -1,6 +1,6 @@
 <template>
     <div class="range__btns">
-        <button class="range__btn" v-for="val in rangeVals" @click="setRangeVal(val)">{{val}}</button>
+        <button class="range__btn" v-for="val in rangeVals" @click="setRangeVal(val)">{{val}} %</button>
     </div>
 </template>
 
@@ -22,14 +22,21 @@
     .range__btns {
         display: flex;
         justify-content: space-between;
+
+        margin-top: 26px;
     }
     .range__btn {
         min-width: 70px;
-        min-height: 50px;
-        background-color: #2c3e50;
-
-        border-radius: 25px;
 
         color: #fff;
+
+        min-height: 40px;
+        background-color: #456686;
+        border-radius: 20px;
+        border: 0;
+        margin: 0 6px;
+        font-size: 16px;
+        font-weight: bold;
+        padding-top: 4px;
     }
 </style>

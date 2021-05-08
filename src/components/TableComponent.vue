@@ -34,7 +34,7 @@
     },
     methods: {
       rowClick(id) {
-        this.$router.push( `/selectPeole/${id}`);
+        this.$router.push( `/selectPeople/${id}`);
       }
     },
   }

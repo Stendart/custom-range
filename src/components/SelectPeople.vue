@@ -29,7 +29,7 @@
     methods: {
       remove(id) {
         this.$store.commit('removePeople', id);
-        this.$router.push('/peoleList');
+        this.$router.push('/peopleList');
       }
     },
     async created() {

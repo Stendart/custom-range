@@ -7,7 +7,9 @@
              @touchmove="move"
              @touchstart="mouseDown"
              @touchend="mouseUp">
-            <div :style="{ left: range + '%' }" class="range__point"></div>
+            <div class="range__pointContainer">
+                <div :style="{ left: range + '%' }" class="range__point"></div>
+            </div>
         </div>
         <RangeBtns :range-vals="[25,50,75,100]" @changeVal="changeVal"></RangeBtns>
     </div>
@@ -94,20 +96,33 @@ import RangeBtns from './RangeBtns';
 
         width: 100%;
         height: 40px;
-        background-color: #778c9e;
+        background-color: #bddaf5;
         border-radius: 30px;
+    }
+
+    .range__pointContainer {
+        position: relative;
+        left: 0;
+        top: 0;
+        width: calc(100% - 40px);
+        height: 100%;
+        margin-left: 17px;
     }
 
     .range__point {
         position: absolute;
-
-        width: 40px;
-        height: 40px;
-        background-color: #c4c4c4;
         border-radius: 50%;
 
         transform: translateX(-50%);
 
         cursor: pointer;
+
+        left: 0;
+        margin: 3px;
+        width: 34px;
+        height: 34px;
+        background-color: #fff;
+
+
     }
 </style>

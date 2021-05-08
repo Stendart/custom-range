@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form class="form-control">
+        <form @submit.prevent="filter" class="form-control">
             <label for="filter">Введите имя для поиска</label>
             <div class="search-wrap">
                 <input ref="search" id="filter" type="text">

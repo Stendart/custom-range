@@ -39,7 +39,7 @@
       peopleList() {
         this.people = this.$store.getters.getPeoples
         if (this.filterStr) {
-          return this.people.filter((people) => people.first_name.includes(this.filterStr));
+          return this.people.filter((people) => people.first_name.toLowerCase().includes(this.filterStr.toLowerCase()));
         }
         return this.people;
       },

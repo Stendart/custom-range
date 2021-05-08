@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Input Range</router-link> |
-      <router-link to="/peoleList">People List</router-link>
+      <router-link to="/peopleList">People List</router-link>
     </div>
     <router-view/>
   </div>
