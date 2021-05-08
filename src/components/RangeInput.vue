@@ -1,72 +1,89 @@
 <template>
     <div class="range-wrapper">
-        <div ref="rangeLine" class="range" @mousedown="mouseDown" @mouseup="mouseUp" @mousemove="move">
-            <div ref="rangePoint" :style="{ left: distance + 'px' }" class="range__point"></div>
+        <div ref="rangeLine" class="range"
+             @mousedown="mouseDown"
+             @mouseup="mouseUp"
+             @mousemove="move"
+             @touchmove="move"
+             @touchstart="mouseDown"
+             @touchend="mouseUp">
+            <div :style="{ left: range + '%' }" class="range__point"></div>
         </div>
+        <RangeBtns :range-vals="[25,50,75,100]" @changeVal="changeVal"></RangeBtns>
     </div>
 </template>
 
 <script>
+import {throttle} from 'lodash';
+import RangeBtns from './RangeBtns';
+
   export default {
     name: "RangeInput",
     props: {
-      value: 0,
-      min: {
+      value: {
         type: Number,
-        default: 0
+        default: 50
       },
-      max: {
-        type: Number,
-        default: 100
-      },
-      step: {
-        type: Number,
-        default: 1
-      }
     },
     data() {
       return {
         range: this.value,
-        point: this.$refs.rangePoint,
         isMouseDown: false,
-        distance: 0,
-        coordinateStartComponent: null
+        coordinateStartComponent: null,
+        elWidth: null,
       }
     },
     methods: {
-      onInput (e) {
-        this.$emit('input', e.target.value)
-      },
-      move(e) {
+      move: throttle(function(e) {
         if (this.isMouseDown === true) {
-          console.log('move')
-          this.setPointPosition(e.clientX)//pageX) //clientX)
+          let biasX = this.calcBiasX(e);
+          this.setPointPosition(biasX);
         }
-      },
-      mouseDown() {
+      }, 100),
+      mouseDown(e) {
+        const biasX = this.calcBiasX(e);
+        this.setPointPosition(biasX);
         this.isMouseDown = true;
       },
       mouseUp() {
         this.isMouseDown = false;
       },
       setPointPosition(newX) {
-        console.log('Значение', newX)
         const curentPosition = newX - this.coordinateStartComponent;
-        this.distance = curentPosition;
+          this.range = Math.round(curentPosition / this.elWidth * 100);
+      },
+      changeVal(val) {
+        this.range = val;
+      },
+      calcBiasX(e) {
+        if (e.targetTouches) { // Если устройство сенсорное
+          return  e.targetTouches[0].pageX;
+        } else if (e.clientX) { // Если устройство не сенсорное
+          return e.clientX;
+        } else {
+          throw new Error('Unknown device type');
+        }
       }
     },
     watch: {
-      /*range: function () {
-        this.$emit('input', this.range)
+      range: function (newVal) {
+        if(newVal > 100) {
+          this.range = 100;
+        } else if (newVal < 0) {
+          this.range = 0;
+        }
+        this.$emit('input', this.range);
       },
       value: function () {
-        this.range = this.value
-      }*/
+        this.range = this.value;
+      }
     },
     mounted() {
-      this.coordinateStartComponent = this.$refs.rangeLine.getBoundingClientRect().left
-      console.log('Проверка')
-      console.log(this.coordinateStartComponent)
+      this.coordinateStartComponent = this.$refs.rangeLine.getBoundingClientRect().left;
+      this.elWidth = this.$refs.rangeLine.getBoundingClientRect().width;
+    },
+    components: {
+      RangeBtns
     }
   }
 </script>
@@ -77,7 +94,7 @@
 
         width: 100%;
         height: 40px;
-        background-color: #2c3e50;
+        background-color: #778c9e;
         border-radius: 30px;
     }
 
@@ -86,9 +103,11 @@
 
         width: 40px;
         height: 40px;
-        background-color: #ea9b9b;
+        background-color: #c4c4c4;
         border-radius: 50%;
 
-        /*pointer-events: none;*/
+        transform: translateX(-50%);
+
+        cursor: pointer;
     }
 </style>

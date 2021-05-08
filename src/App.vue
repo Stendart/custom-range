@@ -1,13 +1,19 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">Input Range</router-link> |
+      <router-link to="/peoleList">People List</router-link>
     </div>
     <router-view/>
   </div>
 </template>
-
+<script>
+  export default {
+    created() {
+      this.$store.dispatch('getData');
+    }
+  }
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -28,5 +34,19 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.btn {
+  min-width: 70px;
+  min-height: 50px;
+  padding: 10px 20px;
+  background-color: #56433D;
+
+  border-radius: 25px;
+
+  color: #F9C941;
+  font-size: 0.9em;
+
+  cursor: pointer;
 }
 </style>

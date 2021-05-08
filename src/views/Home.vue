@@ -1,24 +1,21 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <RangeInput class="test" v-model="range" :step="10"></RangeInput>
     <h2>{{range}}</h2>
+    <RangeInput class="test" v-model="range"></RangeInput>
   </div>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld.vue'
 import RangeInput from '../components/RangeInput';
 
 export default {
   name: 'Home',
   data() {
     return {
-      range: 50,
+      range: 20,
     }
   },
   components: {
-    HelloWorld,
     RangeInput
   }
 }
@@ -26,6 +23,6 @@ export default {
 <style scoped>
   .test {
     max-width: 70%;
-    margin-left: 100px;
+    margin: 0 auto;
   }
 </style>
