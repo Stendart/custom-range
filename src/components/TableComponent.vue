@@ -1,7 +1,6 @@
 <template>
-    <div class="card center">
+    <div>
         <table class="table">
-            <caption>People list</caption>
             <thead>
             <tr>
                 <th v-for="(tabName, index) in tableHead" :key="index">
@@ -42,8 +41,9 @@
 </script>
 <style scoped>
     .table {
-        width: 90%;
+        width: 100%;
         border-collapse: collapse;
+        margin: 0 auto;
     }
     .table caption {
         padding: 1rem 1rem 2rem 1rem;
@@ -59,7 +59,6 @@
         color: #F9C941;
         border-right: 2px solid;
         font-size: 0.9em;
-        cursor: pointer;
     }
     .table th:last-child {
         border-right: none;

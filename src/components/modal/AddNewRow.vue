@@ -37,7 +37,7 @@
                        v-model="email.value">
                 <small v-if="this.email.isError">{{this.email.isError}}</small>
             </div>
-            <button class="btn primary" :disabled="!enableBtn">Добавить в таблицу</button>
+            <button class="btn" :disabled="!enableBtn">Добавить в таблицу</button>
         </form>
     </div>
 </template>
@@ -149,5 +149,10 @@
     .form-control input:focus {
         transition: border 0.22s;
         border: 2px solid #42b983;
+    }
+
+    .btn:disabled {
+        color: #000;
+        background-color: #778c9e;
     }
 </style>

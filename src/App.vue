@@ -35,4 +35,18 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.btn {
+  min-width: 70px;
+  min-height: 50px;
+  padding: 10px 20px;
+  background-color: #56433D;
+
+  border-radius: 25px;
+
+  color: #F9C941;
+  font-size: 0.9em;
+
+  cursor: pointer;
+}
 </style>
