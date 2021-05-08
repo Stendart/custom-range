@@ -15,8 +15,9 @@ export default new Vuex.Store({
       const user = {...payload, id: Date.now()}
       state.peoples.unshift(user)
     },
-    clearDate(state) {
-      state.peoples = []
+    removePeople(state, id) {
+      const userIdx = state.peoples.find((p) => p.id === id);
+      state.peoples.splice(userIdx, 1);
     },
   },
   actions: {

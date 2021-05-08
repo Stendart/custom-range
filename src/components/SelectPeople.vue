@@ -8,6 +8,9 @@
                     <li>id: {{people.id}}</li>
                     <li>email: {{people.email}}</li>
                     <li><img :src="people.avatar"/></li>
+                    <li>
+                        <button class="btn" @click="remove(people.id)">Удалить пользователя</button>
+                    </li>
                 </ul>
             </li>
 
@@ -23,10 +26,14 @@
         selectPeople: null
       }
     },
+    methods: {
+      remove(id) {
+        this.$store.commit('removePeople', id);
+        this.$router.push('/peoleList');
+      }
+    },
     async created() {
-      console.log('this.$route.params.id', this.$route.params.id);
       const people = await this.$store.dispatch('getSelectPeople', this.$route.params.id);
-      console.log('people from component', people);
       this.selectPeople = people;
     }
   }
@@ -45,5 +52,9 @@
         li {
             margin-top: 10px;
         }
+    }
+
+    .btn {
+        color: #e87070;
     }
 </style>
