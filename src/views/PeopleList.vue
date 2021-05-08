@@ -7,10 +7,9 @@
          <button class="btn" @click="showModal = true">Добавить новую запись</button>
      </div>
 
-
     <TableComponent class="table" :table-head="tableHead" :peopleList="peopleList"></TableComponent>
 
-    <Modal v-if="showModal" @close="showModal = false">
+    <Modal title="Новая запись" v-if="showModal" @close="showModal = false">
       <AddNewRow @close="showModal = false"></AddNewRow>
     </Modal>
 
@@ -40,9 +39,9 @@
       peopleList() {
         this.people = this.$store.getters.getPeoples
         if (this.filterStr) {
-          return this.people.filter((people) => people.first_name.includes(this.filterStr))
+          return this.people.filter((people) => people.first_name.includes(this.filterStr));
         }
-        return this.people
+        return this.people;
       },
     },
     components: {
@@ -59,17 +58,13 @@
         max-width: 90%;
         margin: 0 auto;
     }
-
-
     .people-list__control-panel {
         display: flex;
         justify-content: space-between;
     }
-
     .search-people {
         width: 50%;
     }
-
     .table {
         margin-top: 40px;
     }

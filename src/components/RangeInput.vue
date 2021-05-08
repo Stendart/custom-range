@@ -36,14 +36,11 @@ import RangeBtns from './RangeBtns';
     methods: {
       move: throttle(function(e) {
         if (this.isMouseDown === true) {
-          console.log('move');
           let biasX = this.calcBiasX(e);
           this.setPointPosition(biasX);
         }
       }, 100),
       mouseDown(e) {
-        console.log('DOWN', e)
-        console.log('DOWN', e.targetTouches)
         const biasX = this.calcBiasX(e);
         this.setPointPosition(biasX);
         this.isMouseDown = true;
@@ -53,9 +50,7 @@ import RangeBtns from './RangeBtns';
       },
       setPointPosition(newX) {
         const curentPosition = newX - this.coordinateStartComponent;
-        console.log('Значение', curentPosition);
           this.range = Math.round(curentPosition / this.elWidth * 100);
-        console.log('Проценты', this.range);
       },
       changeVal(val) {
         this.range = val;
@@ -66,7 +61,7 @@ import RangeBtns from './RangeBtns';
         } else if (e.clientX) { // Если устройство не сенсорное
           return e.clientX;
         } else {
-          throw new Error('Unknown device type')
+          throw new Error('Unknown device type');
         }
       }
     },
@@ -113,6 +108,6 @@ import RangeBtns from './RangeBtns';
 
         transform: translateX(-50%);
 
-        /*pointer-events: none;*/
+        cursor: pointer;
     }
 </style>

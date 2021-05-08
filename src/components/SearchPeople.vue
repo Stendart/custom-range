@@ -15,10 +15,9 @@
     name: "SearchPeople",
     methods: {
       filter() {
-        const search = this.$refs.search
-        //this.$store.commit('filterSubstring/setFilterSubstr', search.value)
-        this.$emit('clickSearch', search.value)
-        this.$refs.search.value = ''
+        const search = this.$refs.search;
+        this.$emit('clickSearch', search.value);
+        this.$refs.search.value = '';
       }
     }
   }
@@ -33,7 +32,6 @@
             width: 70%;
         }
     }
-
     .form-control {
 
         & label {

@@ -1,15 +1,6 @@
 <template>
     <div>
         <form @submit="onSubmit" class="form-control">
-<!--            <div :class="{'invalid' : this.id.isError}">-->
-<!--                <label for="id">id</label>-->
-<!--                <input @focus="focusElem('id')"-->
-<!--                       type="number" ref="id"-->
-<!--                       id="id"-->
-<!--                       v-model.number="id.value">-->
-<!--                <small v-if="this.id.isError">{{ this.id.isError}}</small>-->
-<!--            </div>-->
-
             <div :class="{'invalid' : this.firstName.isError}">
                 <label for="firstName">FirstName</label>
                 <input @focus="focusElem('firstName')"
@@ -47,7 +38,6 @@
     name: "AddNewRow",
     data() {
       return {
-        //id: {value: null, isError: false},
         firstName: {value: null, isError: false},
         lastName: {value: null, isError: false},
         email: {value: null, isError: false},
@@ -56,56 +46,53 @@
     },
     methods: {
       onSubmit(e) {
-        this.isErrorValidate = false
-        //this.isRequaired(this.id)
-        this.isRequaired(this.firstName)
-        this.isRequaired(this.lastName)
-        this.isRequaired(this.email)
-        this.isValidEmail(this.email)
-        this.isAllLetters(this.firstName)
-        this.isAllLetters(this.lastName)
+        this.isErrorValidate = false;
+        this.isRequaired(this.firstName);
+        this.isRequaired(this.lastName);
+        this.isRequaired(this.email);
+        this.isValidEmail(this.email);
+        this.isAllLetters(this.firstName);
+        this.isAllLetters(this.lastName);
 
         if(!this.isErrorValidate) {
           this.$store.commit('addNewRow',
             {
-              //id: this.id.value,
               first_name: this.firstName.value,
               last_name: this.lastName.value,
               email: this.email.value,
               myId: Math.random(),
-            })
-          this.$emit('close')
+            });
+          this.$emit('close');
         }
         e.preventDefault();
       },
       isRequaired(field) {
         if(!field.value) {
-          field.isError = 'Обязательное поле'
-          this.isErrorValidate = true
+          field.isError = 'Обязательное поле';
+          this.isErrorValidate = true;
         }
       },
       isValidEmail(email) {
         const regExpEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(!regExpEmail.test(email.value)) {
-          email.isError = 'Неверный формат'
-          this.isErrorValidate = true
+          email.isError = 'Неверный формат';
+          this.isErrorValidate = true;
         }
       },
       isAllLetters(obj) {
-        const regExpLetters = /^([a-zа-яё]+)$/i
+        const regExpLetters = /^([a-zа-яё]+)$/i;
         if(!regExpLetters.test(obj.value)) {
-          obj.isError = 'Должны быть лишь буквы'
-          this.isErrorValidate = true
+          obj.isError = 'Должны быть лишь буквы';
+          this.isErrorValidate = true;
         }
       },
       focusElem(elem) {
-        this[elem].isError = false
+        this[elem].isError = false;
       }
     },
     computed: {
       enableBtn() {
-        return !!(//this.id.value &&
-          this.firstName.value &&
+        return !!(this.firstName.value &&
           this.lastName.value &&
           this.email.value);
       }

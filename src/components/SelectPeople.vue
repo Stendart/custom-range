@@ -28,7 +28,6 @@
       const people = await this.$store.dispatch('getSelectPeople', this.$route.params.id);
       console.log('people from component', people);
       this.selectPeople = people;
-      //{ "avatar": "https://reqres.in/img/faces/3-image.jpg" }
     }
   }
 </script>

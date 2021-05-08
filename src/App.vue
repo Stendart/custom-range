@@ -10,7 +10,7 @@
 <script>
   export default {
     created() {
-      this.$store.dispatch('getData')
+      this.$store.dispatch('getData');
     }
   }
 </script>

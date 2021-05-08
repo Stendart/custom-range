@@ -82,14 +82,4 @@
         background: #eee;
         cursor: pointer;
     }
-    .up:after {
-        content: '\2191';
-        position: absolute;
-        margin-left: 10px;
-    }
-    .down:after {
-        content: '\2193';
-        position: absolute;
-        margin-left: 10px;
-    }
 </style>

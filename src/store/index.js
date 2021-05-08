@@ -31,16 +31,12 @@ export default new Vuex.Store({
       }
     },
     getSelectPeople({state}, id) {
-      console.log(state)
-      //state.peoples.forEach((el)=> console.log('state.peoples', el.id))
-      const people = state.peoples.filter((el) => el.id === +id);
-      console.log('people', people)
-      return people
+      return state.peoples.filter((el) => el.id === +id);
     }
   },
   getters: {
     getPeoples(state) {
-      return state.peoples
+      return state.peoples;
     }
   },
   modules: {
