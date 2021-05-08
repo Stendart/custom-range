@@ -22,21 +22,25 @@
     .range__btns {
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
 
-        margin-top: 26px;
+
     }
     .range__btn {
         min-width: 70px;
-
-        color: #fff;
-
         min-height: 40px;
+
+        margin-top: 26px;
+
         background-color: #456686;
         border-radius: 20px;
         border: 0;
-        margin: 0 6px;
+
+        cursor: pointer;
+
         font-size: 16px;
         font-weight: bold;
         padding-top: 4px;
+        color: #fff;
     }
 </style>
