@@ -35,11 +35,7 @@
     },
     methods: {
       rowClick(id) {
-        // const row = this.peopleList.find((el) => el.myId === id);
-        // this.$store.commit('selectRowInfo/setRowData', row);
-
         this.$router.push( `/selectPeole/${id}`);
-        //this.$router.push('/selectPeole');
       }
     },
   }

@@ -17,7 +17,7 @@
 
 <script>
   export default {
-    name: "selectPeople",
+    name: "SelectPeople",
     data() {
       return {
         selectPeople: null

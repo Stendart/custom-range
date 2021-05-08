@@ -12,7 +12,8 @@ export default new Vuex.Store({
       state.peoples = payload
     },
     addNewRow(state, payload) {
-      state.peoples.unshift(payload)
+      const user = {...payload, id: Date.now()}
+      state.peoples.unshift(user)
     },
     clearDate(state) {
       state.peoples = []

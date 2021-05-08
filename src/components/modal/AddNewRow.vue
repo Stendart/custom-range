@@ -1,14 +1,14 @@
 <template>
     <div>
         <form @submit="onSubmit" class="form-control">
-            <div :class="{'invalid' : this.id.isError}">
-                <label for="id">id</label>
-                <input @focus="focusElem('id')"
-                       type="number" ref="id"
-                       id="id"
-                       v-model.number="id.value">
-                <small v-if="this.id.isError">{{ this.id.isError}}</small>
-            </div>
+<!--            <div :class="{'invalid' : this.id.isError}">-->
+<!--                <label for="id">id</label>-->
+<!--                <input @focus="focusElem('id')"-->
+<!--                       type="number" ref="id"-->
+<!--                       id="id"-->
+<!--                       v-model.number="id.value">-->
+<!--                <small v-if="this.id.isError">{{ this.id.isError}}</small>-->
+<!--            </div>-->
 
             <div :class="{'invalid' : this.firstName.isError}">
                 <label for="firstName">FirstName</label>
@@ -37,17 +37,6 @@
                        v-model="email.value">
                 <small v-if="this.email.isError">{{this.email.isError}}</small>
             </div>
-
-            <div :class="{'invalid' : this.phone.isError}">
-                <label for="phone">phone</label>
-                <input @focus="focusElem('phone')"
-                       type="text"
-                       ref="phone"
-                       id="phone"
-                       v-model.number="phone.value">
-                <small v-if="this.phone.isError">{{this.phone.isError}}</small>
-            </div>
-
             <button class="btn primary" :disabled="!enableBtn">Добавить в таблицу</button>
         </form>
     </div>
@@ -58,34 +47,31 @@
     name: "AddNewRow",
     data() {
       return {
-        id: {value: null, isError: false},
+        //id: {value: null, isError: false},
         firstName: {value: null, isError: false},
         lastName: {value: null, isError: false},
         email: {value: null, isError: false},
-        phone: {value: null, isError: false},
         isErrorValidate: false
       }
     },
     methods: {
       onSubmit(e) {
         this.isErrorValidate = false
-        this.isRequaired(this.id)
+        //this.isRequaired(this.id)
         this.isRequaired(this.firstName)
         this.isRequaired(this.lastName)
         this.isRequaired(this.email)
-        this.isRequaired(this.phone)
         this.isValidEmail(this.email)
         this.isAllLetters(this.firstName)
         this.isAllLetters(this.lastName)
-        this.isCorrectPhone(this.phone)
+
         if(!this.isErrorValidate) {
           this.$store.commit('addNewRow',
             {
-              id: this.id.value,
-              firstName: this.firstName.value,
-              lastName: this.lastName.value,
+              //id: this.id.value,
+              first_name: this.firstName.value,
+              last_name: this.lastName.value,
               email: this.email.value,
-              phone: this.phone.value,
               myId: Math.random(),
             })
           this.$emit('close')
@@ -112,29 +98,16 @@
           this.isErrorValidate = true
         }
       },
-      isCorrectPhone(phone) {
-        // /^[\d]{1}\ \([\d]{2,3}\)\ [\d]{2,3}-[\d]{2,3}-[\d]{2,3}$/
-        // формат 8 (999) 123-45-64
-        const regExpPhone = /^\d[\d\(\)\ -]{4,14}\d$/
-        if(!regExpPhone.test(phone.value)) {
-          phone.isError = 'Некорректный формат номера'
-          this.isErrorValidate = true
-        }
-      },
       focusElem(elem) {
         this[elem].isError = false
       }
     },
     computed: {
       enableBtn() {
-        if(this.id.value &&
+        return !!(//this.id.value &&
           this.firstName.value &&
           this.lastName.value &&
-          this.email.value &&
-          this.phone.value) {
-          return true
-        }
-        return false
+          this.email.value);
       }
     }
   }

@@ -31,9 +31,6 @@
         return this.people
       },
     },
-    created() {
-      this.$store.dispatch('getData')
-    },
     components: {
       TableComponent,
       Modal,
