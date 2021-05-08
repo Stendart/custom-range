@@ -16,7 +16,7 @@ export default new Vuex.Store({
     },
     clearDate(state) {
       state.peoples = []
-    }
+    },
   },
   actions: {
     async getData({commit}) {
@@ -24,16 +24,17 @@ export default new Vuex.Store({
       try {
         const response = await fetch(url)
         const data = await response.json();
-
-        // Так как в исходных данных id - не уникален, добавляю собственный
-        /*data.forEach((el)=> {
-          el.myId = Math.random();
-        })*/
-        console.log('response', data.data)
         commit('setDate', data.data)
       } catch (e) {
         console.log(e.message)
       }
+    },
+    getSelectPeople({state}, id) {
+      console.log(state)
+      //state.peoples.forEach((el)=> console.log('state.peoples', el.id))
+      const people = state.peoples.filter((el) => el.id === +id);
+      console.log('people', people)
+      return people
     }
   },
   getters: {

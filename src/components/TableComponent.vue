@@ -4,15 +4,14 @@
             <caption>People list</caption>
             <thead>
             <tr>
-                <th v-for="(tabName, index) in tableHead" :key="index"
-                    @click="sortedBy(tabName)" :ref="tabName" data-sort_dir="up">
+                <th v-for="(tabName, index) in tableHead" :key="index">
                     {{tabName}}
                 </th>
             </tr>
             </thead>
             <slot name="loader"></slot>
             <tbody >
-            <tr v-for="p in peopleList" :key="p.id" @click="rowClick(id)">
+            <tr v-for="p in peopleList" :key="p.id" @click="rowClick(p.id)">
                 <td>{{p.id}}</td>
                 <td>{{p.first_name}}</td>
                 <td>{{p.last_name}}</td>
@@ -20,15 +19,10 @@
             </tr>
             </tbody>
         </table>
-        <slot></slot>
     </div>
 </template>
 
 <script>
-  const SORTED_DIRECTION = {
-    up: 'up',
-    down: 'down'
-  }
   export default {
     name: "TableComponent",
     props: {
@@ -37,26 +31,15 @@
     },
     data() {
       return {
-        idx: 0
       }
     },
     methods: {
-      sortedBy(sortField) {
-        const target = this.$refs[sortField][0]
-        this.deleteClassList(SORTED_DIRECTION)
-        this.$emit('sortData', sortField, target)
-      },
-      deleteClassList(classList = {}) {
-        const classArr = Object.keys(classList)
-        Object.keys(this.$refs).forEach(el => {
-          classArr.forEach(className => {
-            this.$refs[el][0].classList?.remove(className)
-          })
-        })
-      },
       rowClick(id) {
-        const row = this.peopleList.find((el) => el.myId === id)
-        this.$store.commit('selectRowInfo/setRowData', row)
+        // const row = this.peopleList.find((el) => el.myId === id);
+        // this.$store.commit('selectRowInfo/setRowData', row);
+
+        this.$router.push( `/selectPeole/${id}`);
+        //this.$router.push('/selectPeole');
       }
     },
   }

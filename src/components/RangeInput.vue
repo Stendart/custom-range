@@ -37,28 +37,14 @@ import RangeBtns from './RangeBtns';
       move: throttle(function(e) {
         if (this.isMouseDown === true) {
           console.log('move');
-          let biasX;
-          if (e.targetTouches) { // Если устройство сенсорное
-            biasX = e.targetTouches[0].pageX;
-          } else if (e.clientX) { // Если устройство не сенсорное
-            biasX = e.clientX;
-          } else {
-            throw new Error('Unknown device type')
-          }
-          this.setPointPosition(biasX);//pageX) //clientX)
+          let biasX = this.calcBiasX(e);
+          this.setPointPosition(biasX);
         }
       }, 100),
       mouseDown(e) {
         console.log('DOWN', e)
         console.log('DOWN', e.targetTouches)
-        let biasX;
-        if (e.targetTouches) { // Если устройство сенсорное
-          biasX = e.targetTouches[0].pageX;
-        } else if (e.clientX) { // Если устройство не сенсорное
-          biasX = e.clientX;
-        } else {
-          throw new Error('Unknown device type')
-        }
+        const biasX = this.calcBiasX(e);
         this.setPointPosition(biasX);
         this.isMouseDown = true;
       },
@@ -73,6 +59,15 @@ import RangeBtns from './RangeBtns';
       },
       changeVal(val) {
         this.range = val;
+      },
+      calcBiasX(e) {
+        if (e.targetTouches) { // Если устройство сенсорное
+          return  e.targetTouches[0].pageX;
+        } else if (e.clientX) { // Если устройство не сенсорное
+          return e.clientX;
+        } else {
+          throw new Error('Unknown device type')
+        }
       }
     },
     watch: {
