@@ -1,6 +1,6 @@
 <template>
     <div class="range-wrapper">
-        <div ref="rangeLine" @mouseleave="mouseLeave" class="range"
+        <div ref="rangeLine" class="range"
              @mousedown="mouseDown"
              @mouseup="mouseUp"
              @mousemove="move"
@@ -37,7 +37,6 @@ import RangeBtns from './RangeBtns';
     },
     methods: {
       move: throttle(function(e) {
-        // console.log(e.buttons)
         if (this.isMouseDown === true) {
           let biasX = this.calcBiasX(e);
           this.setPointPosition(biasX);
@@ -52,11 +51,7 @@ import RangeBtns from './RangeBtns';
       },
       mouseUp() {
         this.isMouseDown = false;
-        console.log('Up')
         document.removeEventListener('mouseup', this.mouseUp)
-      },
-      mouseLeave() {
-        //this.mouseUp();
       },
       setPointPosition(newX) {
         const curentPosition = newX - this.coordinateStartComponent;
