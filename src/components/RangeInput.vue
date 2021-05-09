@@ -4,6 +4,7 @@
              @mousedown="mouseDown"
              @mouseup="mouseUp"
              @mousemove="move"
+             @mouseleave="mouseLeave"
              @touchmove="move"
              @touchstart="mouseDown"
              @touchend="mouseUp">
@@ -47,11 +48,16 @@ import RangeBtns from './RangeBtns';
         this.setPointPosition(biasX);
         this.isMouseDown = true;
 
-        document.addEventListener('mouseup', this.mouseUp)
+        document.addEventListener('mouseup', this.mouseUp);
       },
       mouseUp() {
         this.isMouseDown = false;
-        document.removeEventListener('mouseup', this.mouseUp)
+        document.removeEventListener('mouseup', this.mouseUp);
+      },
+      mouseLeave(e) {
+        if(e.buttons) {
+          this.mouseUp();
+        }
       },
       setPointPosition(newX) {
         const curentPosition = newX - this.coordinateStartComponent;
