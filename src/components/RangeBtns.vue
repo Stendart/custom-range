@@ -42,5 +42,7 @@
         font-weight: bold;
         padding-top: 4px;
         color: #fff;
+
+        user-select: none;
     }
 </style>
